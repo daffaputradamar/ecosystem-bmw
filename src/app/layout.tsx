@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider/theme-provider";
+import { ModeToggle } from "@/components/ModeToggle/mode-toggle";
+import Navbar from "@/components/Navbar/navbar";
+import Footer from "@/components/Footer/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +20,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head />
+      <body className={`${inter.className} min-h-screen flex flex-col justify-between scrollbar`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <main>
+            {children}
+          </main>
+          <Footer/>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
