@@ -12,8 +12,7 @@ export default function Product({ product }: any) {
                 alt={product.description}
                 width={500}
                 height={500}
-                className="object-cover w-full h-64"
-                style={{ aspectRatio: "500/500", objectFit: "cover" }}
+                className="object-cover w-full h-64 aspect-square"
             />
             <div className="p-4 bg-card">
                 <h3 className="text-xl font-bold">{product.name}</h3>

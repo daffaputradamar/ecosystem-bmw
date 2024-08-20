@@ -35,9 +35,6 @@ export default function ProductDetails({ params }: { params: { id: number } }) {
     const response = await fetch(product.image);
     const blob = await response.blob();
 
-    console.log(blob);
-    
-
     let filename = 'product-image.jpg'; // Default filename
     let fileType = blob.type || 'image/jpeg'; // Default file type
 

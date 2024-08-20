@@ -94,7 +94,7 @@ export default function Navbar() {
                                 <div className="flex flex-col justify-between h-full">
                                     <div className="grid gap-2 py-6">
                                         {menus.map((menu) => {
-                                            const isActive = pathName === menu.path || pathName.startsWith(menu.path);
+                                            const isActive = pathName === menu.path
 
                                             return (
                                                 <Link key={menu.path} className={`flex w-full items-center py-2 px-3 text-lg font-semibold ${isActive ? "bg-primary rounded-md text-primary-foreground" : ""}`} href={menu.path}>
