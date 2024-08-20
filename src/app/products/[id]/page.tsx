@@ -3,6 +3,9 @@
 import { useQuery } from "@tanstack/react-query";
 import ProductButton from "./_components/ProductButton"
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Share2, ShoppingCart } from "lucide-react";
 
 export default function ProductDetails({ params }: { params: { id: number } }) {
 
@@ -18,7 +21,7 @@ export default function ProductDetails({ params }: { params: { id: number } }) {
   });
 
   if (isLoading) return (
-    <div className="flex gap-6 lg:gap-12 py-6 max-w-6xl px-4 mx-auto">
+    <div className="flex flex-col md:flex-row gap-6 lg:gap-12 py-6 max-w-6xl px-4 mx-auto">
       <Skeleton className="aspect-square border w-full rounded-lg" />
       <div className="flex flex-col w-full gap-4">
         <Skeleton className="h-12 border w-full rounded-lg" />
@@ -29,19 +32,37 @@ export default function ProductDetails({ params }: { params: { id: number } }) {
   );
 
   async function onShareHandler() {
+    const response = await fetch(product.image);
+    const blob = await response.blob();
+
+    console.log(blob);
+    
+
+    let filename = 'product-image.jpg'; // Default filename
+    let fileType = blob.type || 'image/jpeg'; // Default file type
+
+    const contentDisposition = response.headers.get('Content-Disposition');
+    console.log(contentDisposition);
+    
+    if (contentDisposition) {
+      const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+      if (filenameMatch && filenameMatch.length > 1) {
+        filename = filenameMatch[1];
+      }
+    }
+
+    const file = new File([blob], filename, { type: fileType });
     if (navigator.share) {
       navigator.share({
         title: product.name,
         text: product.description,
         url: window.location.href, // The current page URL
         files: [
-          new File(
-            [await (await fetch(product.image)).blob()],
-            "product-image.jpg",
-            { type: "image/jpeg" }
-          ),
+          file
         ],
       })
+    } else {
+      toast.error("Share feature is not supported in your browser.")
     }
   }
 
@@ -67,7 +88,10 @@ export default function ProductDetails({ params }: { params: { id: number } }) {
           <p>{product.description}</p>
         </div>
         <form className="grid gap-4">
-          <ProductButton onAddToCartHandler={onAddToCartHandler} onShareHandler={onShareHandler} />
+          <div className="flex items-center justify-between gap-3">
+            <Button type="button" onClick={onAddToCartHandler} size="lg" className="flex-1"><ShoppingCart className="mr-2 h-4" /> Add to Cart</Button>
+            <Button type="button" onClick={onShareHandler} size="lg" variant={"secondary"}><Share2 className="mr-2 h-4 w-4" /> Share</Button>
+          </div>
         </form>
       </div>
     </div>
