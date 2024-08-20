@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Product from "./Product";
 import { useQuery } from "@tanstack/react-query";
 
-export default function ProductList() {
+export default function ProductList(props: any) {
 
     const { data: products, error, isLoading } = useQuery({
         queryKey: ['products'],
