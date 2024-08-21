@@ -1,0 +1,1 @@
+ALTER TABLE "ecobmw_products" ADD COLUMN "price" numeric NOT NULL;
