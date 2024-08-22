@@ -1,9 +1,8 @@
-import { UploadButton } from '@/utils/uploadthing';
 import ProductList from '../../_components/ProductList';
-import { toast } from 'sonner';
 import { getProducts } from '@/server/queries';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function Home() {
   const products = await getProducts();

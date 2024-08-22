@@ -12,9 +12,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Loader2, PlusCircle } from "lucide-react";
 import { useUploadThing } from "@/utils/uploadthing";
+import { useState } from "react";
 
 export default function Page() {
   const queryClient = useQueryClient();
+  const [isUploading, setIsUploading] = useState(false);
 
   const { mutate, isPending } = useMutation({
     mutationFn: CreateProduct,
@@ -24,6 +26,7 @@ export default function Page() {
         description: "",
         price: "",
         image_url: "",
+        file: "",
       });
 
       toast.success(`Product ${data.name} created successfully 🎉`, {
@@ -45,12 +48,13 @@ export default function Page() {
   });
 
   const onSubmit = async (values: InsertProductSchemaType) => {
-    console.log(values);
     
     if (!values.file) {
       toast.error("Please select an image", { id: "upload-button" });
       return;
     }
+
+    setIsUploading(true);
 
     const selectedFile = Array.from([values.file]);
     const result = await $ut.startUpload(selectedFile as File[]);
@@ -73,9 +77,11 @@ export default function Page() {
       toast.loading("Uploading...", { id: "upload-button" });
     },
     onClientUploadComplete: () => {
+      setIsUploading(false);
       toast.success("Upload Completed", { id: "upload-button" });
     },
     onUploadError: () => {
+      setIsUploading(false);
       toast.error("Upload failed", { id: "upload-button" });
     },
 
@@ -157,12 +163,12 @@ export default function Page() {
           {/* <UploadButton /> */}
 
           <Button onClick={form.handleSubmit(onSubmit)} disabled={isPending}>
-            {!isPending && <>
+            {!(isPending || isUploading) && <>
               <PlusCircle className="w-5 h-5 mr-2" />
               Create
             </>}
-            {isPending && <>
-              <Loader2 className="animate-spin" />
+            {(isPending || isUploading) && <>
+              <Loader2 className="animate-spin w-5 h-5 mr-2" />
               Creating...
             </>}
           </Button>
