@@ -22,7 +22,7 @@ export default function RootLayout({
     })
     const [sidebarOpen, setSidebarOpen] = useState(true)
 
-    const toggleMenu = (menu: string) => {
+    const toggleMenu = (menu: 'products' | 'users') => {
         setOpenMenus(prevState => ({
             ...prevState,
             [menu]: !prevState[menu]
