@@ -1,11 +1,11 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { ProductType } from "@/server/db/schema";
+import { ProductSchemaType } from "@/schema/product";
 import { Share2, ShoppingCart } from "lucide-react"
 import { toast } from "sonner";
 
-export default function ProductButton({ product }: { product: ProductType }) { 
+export default function ProductButton({ product }: { product: ProductSchemaType }) { 
     async function onShareHandler() {
         const response = await fetch(product.image_url);
         const blob = await response.blob();
