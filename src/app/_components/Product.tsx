@@ -1,8 +1,8 @@
-import { ProductType } from "@/server/db/schema";
+import { ProductSchemaType } from "@/schema/product";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Product({ product }: { product: ProductType }) {
+export default function Product({ product }: { product: ProductSchemaType }) {
     const IDR = new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR',

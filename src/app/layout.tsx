@@ -29,11 +29,7 @@ export default function RootLayout({
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
         <RootProviders>
-          <Navbar />
-          <main className="flex-1 container">
-            {children}
-          </main>
-          <Footer />
+          {children}
           <Toaster richColors position="bottom-right" />
         </RootProviders>
       </body>

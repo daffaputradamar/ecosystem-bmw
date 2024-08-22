@@ -29,8 +29,6 @@ export const products = createTable(
     }
   );
 
-export type ProductType = typeof products.$inferSelect;
-  
 export const userRoleEnum = pgEnum('role', ['user', 'admin']);  
 
 export const users = createTable(
