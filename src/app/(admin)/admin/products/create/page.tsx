@@ -97,8 +97,8 @@ export default function Page() {
     }
   });
   return (
-    <>
-      <h1>Create Product Admin Page</h1>
+    <div className="container mx-auto py-10">
+      <h1 className="text-3xl font-bold mb-8">Create Product</h1> 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -174,6 +174,6 @@ export default function Page() {
           </Button>
         </form>
       </Form>
-    </>
+    </div>
   )
 }

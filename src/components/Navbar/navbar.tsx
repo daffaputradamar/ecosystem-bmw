@@ -7,9 +7,11 @@ import { usePathname } from "next/navigation"
 import LogoIcon from "../icons/logo"
 import MenuIcon from "../icons/menu"
 import { signOut, useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const router = useRouter()
 
     const menus: {
         path: string;
@@ -25,6 +27,11 @@ export default function Navbar() {
     pathName = "/" + pathName.split("/")[1]
 
     const isAdmin = true
+
+    const handleLogout = async () => {
+        await signOut({redirect: false});
+        router.push("/")
+    }
 
     return (
         <nav className="inset-x-0 top-0 z-50">
@@ -54,7 +61,7 @@ export default function Navbar() {
                                             Admin
                                         </Link>
                                     }
-                                    <Button size="sm" variant="outline" onClick={() => signOut()}>
+                                    <Button size="sm" variant="outline" onClick={handleLogout}>
                                         Sign Out
                                     </Button>
                                 </>
@@ -65,7 +72,7 @@ export default function Navbar() {
                                             Sign in
                                         </Button>
                                     </Link>
-                                    <Link href="/auth/signin">
+                                    <Link href="/auth/signin?signup=true" >
                                         <Button size="sm">Sign up</Button>
                                     </Link>
                                 </>
