@@ -8,10 +8,11 @@ import LogoIcon from "../icons/logo"
 import MenuIcon from "../icons/menu"
 import { signOut, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { Skeleton } from "../ui/skeleton"
 
 export default function Navbar() {
-  const { data: session, status } = useSession();
-  const router = useRouter()
+    const { data: session, status } = useSession();
+    const router = useRouter()
 
     const menus: {
         path: string;
@@ -26,10 +27,10 @@ export default function Navbar() {
     let pathName = usePathname()
     pathName = "/" + pathName.split("/")[1]
 
-    const isAdmin = true
+    const isAdmin = session?.user?.role === "admin"
 
     const handleLogout = async () => {
-        await signOut({redirect: false});
+        await signOut({ redirect: false });
         router.push("/")
     }
 
@@ -52,8 +53,9 @@ export default function Navbar() {
                             )
                         })}
                     </nav>
+
                     <div className="flex items-center gap-4">
-                        {
+                        {status === 'loading' ? <Skeleton className="w-36 h-12 rounded-xl bg-gray-200 dark:bg-gray-700" /> :
                             (status === "authenticated") ? (
                                 <>
                                     {
@@ -80,29 +82,32 @@ export default function Navbar() {
                         }
 
 
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button className="md:hidden" size="icon" variant="outline">
-                                    <MenuIcon className="h-6 w-6" />
-                                    <span className="sr-only">Toggle navigation menu</span>
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent side={"left"}>
-                                <div className="flex flex-col justify-between h-full">
-                                    <div className="grid gap-2 py-6">
-                                        {menus.map((menu) => {
-                                            const isActive = pathName === menu.path
+                        {
+                            menus.length > 0 && <Sheet>
+                                <SheetTrigger asChild>
+                                    <Button className="md:hidden" size="icon" variant="outline">
+                                        <MenuIcon className="h-6 w-6" />
+                                        <span className="sr-only">Toggle navigation menu</span>
+                                    </Button>
+                                </SheetTrigger>
+                                <SheetContent side={"left"}>
+                                    <div className="flex flex-col justify-between h-full">
+                                        <div className="grid gap-2 py-6">
+                                            {menus.map((menu) => {
+                                                const isActive = pathName === menu.path
 
-                                            return (
-                                                <Link key={menu.path} className={`flex w-full items-center py-2 px-3 text-lg font-semibold ${isActive ? "bg-primary rounded-md text-primary-foreground" : ""}`} href={menu.path}>
-                                                    {menu.name}
-                                                </Link>)
-                                        })}
+                                                return (
+                                                    <Link key={menu.path} className={`flex w-full items-center py-2 px-3 text-lg font-semibold ${isActive ? "bg-primary rounded-md text-primary-foreground" : ""}`} href={menu.path}>
+                                                        {menu.name}
+                                                    </Link>)
+                                            })}
+                                        </div>
+
                                     </div>
+                                </SheetContent>
+                            </Sheet>
+                        }
 
-                                </div>
-                            </SheetContent>
-                        </Sheet>
                     </div>
                 </div>
             </div>

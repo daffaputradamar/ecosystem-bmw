@@ -1,33 +1,31 @@
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Share2, ShoppingCart } from "lucide-react";
 import { getProductById } from "@/server/queries";
 import Image from "next/image";
 import ProductButton from "./_components/ProductButton";
+import { Metadata } from "next";
 
+export async function generateMetadata({ params }: { params: { id: number } }): Promise<Metadata> {
+  const product = await getProductById(params.id);
+
+  return {
+    title: `Ecosystem BMW - ${product.name}`,
+    description: product.description,
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      images: [
+        {
+          url: product.image_url,
+          width: 800,
+          height: 600,
+          alt: `${product.name} Image`,
+        }
+      ],
+      type: 'website'
+    }
+  };
+}
 export default async function ProductDetails({ params }: { params: { id: number } }) {
 
-  // const { data: product, error, isLoading } = useQuery({
-  //   queryKey: ['products', params.id],
-  //   queryFn: async () => {
-  //     const response = await fetch('/api/products/' + params.id);
-  //     if (!response.ok) {
-  //       throw new Error('Failed to fetch product');
-  //     }
-  //     return response.json();
-  //   },
-  // });
-
-  // if (isLoading) return (
-  //   <div className="flex flex-col md:flex-row gap-6 lg:gap-12 py-6 max-w-6xl px-4 mx-auto">
-  //     <Skeleton className="aspect-square border w-full rounded-lg" />
-  //     <div className="flex flex-col w-full gap-4">
-  //       <Skeleton className="h-12 border w-full rounded-lg" />
-  //       <Skeleton className="h-12 border w-20 rounded-lg" />
-  //       <Skeleton className="h-32 border w-full rounded-lg" />
-  //     </div>
-  //   </div>
-  // );
   const IDR = new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR',
