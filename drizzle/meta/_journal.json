@@ -15,6 +15,13 @@
       "when": 1724253447383,
       "tag": "0001_modern_sharon_carter",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1724403998027,
+      "tag": "0002_mighty_hammerhead",
+      "breakpoints": true
     }
   ]
 }

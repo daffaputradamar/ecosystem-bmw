@@ -6,20 +6,24 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { usePathname } from "next/navigation"
 import LogoIcon from "../icons/logo"
 import MenuIcon from "../icons/menu"
+import { signOut, useSession } from "next-auth/react"
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
 
-    const menus = [
-        {
-            path: "/products",
-            name: "Products"
-        }
-    ]
+    const menus: {
+        path: string;
+        name: string;
+    }[] = [
+            // {
+            //     path: "/products",
+            //     name: "Products"
+            // }
+        ]
 
     let pathName = usePathname()
     pathName = "/" + pathName.split("/")[1]
 
-    const session = true
     const isAdmin = true
 
     return (
@@ -43,27 +47,25 @@ export default function Navbar() {
                     </nav>
                     <div className="flex items-center gap-4">
                         {
-                            (session) ? (
+                            (status === "authenticated") ? (
                                 <>
                                     {
                                         (isAdmin) && <Link className={`font-medium flex items-center text-sm transition-colors hover:underline px-4 ${(pathName === '/admin') ? "bg-primary py-2 rounded-lg text-primary-foreground" : ""}`} href={'/admin'}>
                                             Admin
                                         </Link>
                                     }
-                                    <Link href="#">
-                                        <Button size="sm" variant="outline">
-                                            Sign Out
-                                        </Button>
-                                    </Link>
+                                    <Button size="sm" variant="outline" onClick={() => signOut()}>
+                                        Sign Out
+                                    </Button>
                                 </>
                             ) : (
                                 <>
-                                    <Link href="/login">
+                                    <Link href="/auth/signin">
                                         <Button size="sm" variant="outline">
                                             Sign in
                                         </Button>
                                     </Link>
-                                    <Link href="/register">
+                                    <Link href="/auth/signin">
                                         <Button size="sm">Sign up</Button>
                                     </Link>
                                 </>

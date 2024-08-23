@@ -1,3 +1,4 @@
+import { table } from "console";
 import { sql } from "drizzle-orm";
 import {
   numeric,
@@ -6,6 +7,7 @@ import {
   serial,
   text,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core";
 
@@ -44,7 +46,10 @@ export const users = createTable(
         .default(sql`CURRENT_TIMESTAMP`)
         .notNull(),
       updatedAt: timestamp("updatedAt"),
-    }
+    },
+    (table) => ({
+      usernameUniqueIndex: uniqueIndex('usernameUniqueIndex').on(table.username)
+    })
   );
   
 export type UserType = typeof users.$inferSelect; 

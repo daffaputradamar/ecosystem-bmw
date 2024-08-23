@@ -5,7 +5,9 @@ import { ModeToggle } from '@/components/ModeToggle/mode-toggle';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Package, Users, User, Home, ShoppingCart, BarChart, Settings, HelpCircle, ChevronDown, Menu } from 'lucide-react'
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 
@@ -15,6 +17,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
 
+    const router = useRouter()
     const [openMenus, setOpenMenus] = useState({
         products: true,
         users: false,
@@ -32,6 +35,11 @@ export default function RootLayout({
         setSidebarOpen(prevState => !prevState)
     }
 
+    const handleLogout = async () => {
+        await signOut({redirect: false});
+        router.push("/")
+    }
+
     return (
         <div className="grid min-h-screen w-full grid-cols-[auto_1fr]">
             <aside className={`${sidebarOpen ? 'w-64' : 'w-[60px]'} block lg:block transition-all duration-300 ease-in-out`}>
@@ -46,7 +54,7 @@ export default function RootLayout({
                         <nav className="grid items-start px-4 text-sm font-medium">
                             <Link
                                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                                href="#"
+                                href="/admin"
                             >
                                 <Home className="h-4 w-4" />
                                 {sidebarOpen && <span>Dashboard (En Route)</span>}
@@ -141,7 +149,7 @@ export default function RootLayout({
                             <DropdownMenuContent align="end">
                                 <DropdownMenuLabel>Admin</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem>Logout</DropdownMenuItem>
+                                <DropdownMenuItem className='cursor-pointer' onClick={handleLogout}>Logout</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>

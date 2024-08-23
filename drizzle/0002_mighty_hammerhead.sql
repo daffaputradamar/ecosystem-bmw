@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS "usernameUniqueIndex" ON "ecobmw_users" USING btree ("username");
