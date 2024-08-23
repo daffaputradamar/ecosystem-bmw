@@ -33,7 +33,7 @@ export default function ProductButton({ product }: { product: ProductSchemaType 
     }
 
     const file = new File([blob], filename, { type: fileType });
-    if (!navigator.share) {
+    if (navigator.share) {
       navigator.share({
         title: product.name,
         text: product.description,
