@@ -13,10 +13,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useState } from "react"
-import DeleteProductDialog from "./DeleteProductDialog"
+import DeleteUserDialog from "./DeleteUserDialog"
 import Image from "next/image"
+import { UserSchemaType } from "@/schema/users"
 
-export const columns: ColumnDef<ProductSchemaType>[] = [
+export const columns: ColumnDef<UserSchemaType>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -32,52 +33,23 @@ export const columns: ColumnDef<ProductSchemaType>[] = [
     },
   },
   {
-    accessorKey: "description",
-    header: "Description",
+    accessorKey: "username",
+    header: "Username",
   },
   {
-    accessorKey: "price",
+    accessorKey: "role",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Price
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"))
-      const formatted = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      }).format(price)
-
-      return <div>{formatted}</div>
-    },
-  },
-  {
-    accessorKey: "image_url",
-    header: "Image",
-    cell: ({ row }) => {
-      const product = row.original
-
-      return (
-        <div className="flex items-center gap-2">
-          <a href={product.image_url} target="_blank">
-            <Image
-              src={product.image_url}
-              width={120}
-              height={120}
-              alt="Product Image"
-              className="h-12 w-12 rounded object-cover"
-            />
-          </a>
-        </div>
-      )
-    }
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Role
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
+    
   },
   {
     accessorKey: "createdAt",
@@ -87,7 +59,7 @@ export const columns: ColumnDef<ProductSchemaType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Created At
+          Registered at
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
@@ -106,7 +78,7 @@ export const columns: ColumnDef<ProductSchemaType>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <RowActions transaction={row.original} />
+    cell: ({ row }) => <RowActions user={row.original} />
     // {
     //   const product = row.original
 
@@ -135,15 +107,18 @@ export const columns: ColumnDef<ProductSchemaType>[] = [
 ]
 
 
-function RowActions({ transaction: product }: { transaction: ProductSchemaType }) {
+function RowActions({ user }: { user: UserSchemaType }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
+  if(user.role === "admin") {
+    return null;
+  }
   return (
     <>
-      <DeleteProductDialog
+      <DeleteUserDialog
         open={showDeleteDialog}
         setOpen={setShowDeleteDialog}
-        productId={product.id}
+        userId={user.id}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

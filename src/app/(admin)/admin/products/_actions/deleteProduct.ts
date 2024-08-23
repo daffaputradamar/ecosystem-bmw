@@ -7,7 +7,7 @@ import { UTApi } from "uploadthing/server";
 
 const utapi = new UTApi();
 
-export async function DeleteTransaction(id: number) {
+export async function DeleteProduct(id: number) {
     const product = await db.query.products.findFirst({
         where: (model, { eq }) => eq(model.id, id),
     })

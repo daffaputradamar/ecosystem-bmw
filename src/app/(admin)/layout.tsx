@@ -36,7 +36,7 @@ export default function RootLayout({
     }
 
     const handleLogout = async () => {
-        await signOut({redirect: false});
+        await signOut({ redirect: false });
         router.push("/")
     }
 
@@ -53,6 +53,9 @@ export default function RootLayout({
                         </div>
                         <nav className="grid items-start px-4 text-sm font-medium">
                             <Link
+                                style={{
+                                    pointerEvents: 'none'
+                                }}
                                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                                 href="/admin"
                             >
@@ -61,7 +64,7 @@ export default function RootLayout({
                             </Link>
                             <div>
                                 <button
-                                    className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-gray-500 transition-all hover:bg-gray-200 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700"
+                                    className="flex w-full items-center justify-between rounded-lg px-3 py-2 transition-all hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-400"
                                     onClick={() => toggleMenu('products')}
                                 >
                                     <div className="flex items-center gap-3">
@@ -73,13 +76,13 @@ export default function RootLayout({
                                 {sidebarOpen && openMenus.products && (
                                     <div className="ml-4 mt-2 grid gap-1">
                                         <Link
-                                            className="rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                                            className="rounded-lg px-3 py-2 transition-all hover:text-gray-900 dark:hover:text-gray-50"
                                             href="/admin/products"
                                         >
                                             All Products
                                         </Link>
                                         <Link
-                                            className="rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                                            className="rounded-lg px-3 py-2 transition-all hover:text-gray-900 dark:hover:text-gray-50"
                                             href="/admin/products/create"
                                         >
                                             Add New Product
@@ -88,7 +91,7 @@ export default function RootLayout({
                                 )}
                             </div>
                             <Link
-                                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                                className="flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-900 dark:hover:text-gray-50"
                                 href="/admin/users"
                             >
                                 <Users className="h-4 w-4" />
@@ -96,28 +99,36 @@ export default function RootLayout({
                             </Link>
                             <Link
                                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                                href="#"
+                                href="#" style={{
+                                    pointerEvents: 'none'
+                                }}
                             >
                                 <ShoppingCart className="h-4 w-4" />
                                 {sidebarOpen && <span>Orders (En Route)</span>}
                             </Link>
                             <Link
                                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                                href="#"
+                                href="#" style={{
+                                    pointerEvents: 'none'
+                                }}
                             >
                                 <BarChart className="h-4 w-4" />
                                 {sidebarOpen && <span>Analytics (En Route)</span>}
                             </Link>
                             <Link
                                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                                href="#"
+                                href="#" style={{
+                                    pointerEvents: 'none'
+                                }}
                             >
                                 <Settings className="h-4 w-4" />
                                 {sidebarOpen && <span>Settings (En Route)</span>}
                             </Link>
                             <Link
                                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                                href="#"
+                                href="#" style={{
+                                    pointerEvents: 'none'
+                                }}
                             >
                                 <HelpCircle className="h-4 w-4" />
                                 {sidebarOpen && <span>Help & Support (En Route)</span>}

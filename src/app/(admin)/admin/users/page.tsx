@@ -1,11 +1,20 @@
-import { authConfig } from "@/app/api/auth/[...nextauth]/config"
-import { getServerSession } from "next-auth"
+import { DataTable } from "@/components/DataTable/data-table";
+import { getUsers } from "@/server/queries"
+import { columns } from "./_components/column";
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function Page() {
-  const session = await getServerSession(authConfig) 
-  console.log(session);
-  
-  return ( 
-    <h1>Users Admin Page</h1>
+  const products = await getUsers();
+
+  return (
+    <>
+      <div className="container mx-auto py-10">
+        <h1 className="text-3xl font-bold mb-8">List Users</h1> 
+        <DataTable columns={columns} data={products} />
+      </div>
+    </>
+
   )
 }

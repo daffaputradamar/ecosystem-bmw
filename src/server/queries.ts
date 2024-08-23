@@ -22,3 +22,12 @@ export async function getProductById(id: number) {
 
     return product;
 }
+
+export async function getUsers() {
+
+    const users = await db.query.users.findMany({
+        orderBy: (model, { desc }) => desc(model.id),
+    });
+
+    return users;
+}

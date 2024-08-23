@@ -14,7 +14,7 @@ import {
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import React from "react";
 import { toast } from "sonner";
-import { DeleteTransaction } from "../_actions/deleteProduct";
+import { DeleteProduct } from "../_actions/deleteProduct";
 
 interface Props {
   open: boolean;
@@ -22,19 +22,15 @@ interface Props {
   productId: number;
 }
 
-function DeleteTransactionDialog({ open, setOpen, productId }: Props) {
-  const queryClient = useQueryClient();
+function DeleteProductDialog({ open, setOpen, productId }: Props) {
 
   const deleteMutation = useMutation({
-    mutationFn: DeleteTransaction,
+    mutationFn: DeleteProduct,
     onSuccess: async () => {
       toast.success("Product deleted successfully", {
         id: productId,
       });
 
-      await queryClient.invalidateQueries({
-        queryKey: ["products"],
-      });
     },
     onError: () => {
       toast.error("Something went wrong", {
@@ -56,7 +52,7 @@ function DeleteTransactionDialog({ open, setOpen, productId }: Props) {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              toast.loading("Deleting transaction...", {
+              toast.loading("Deleting product...", {
                 id: productId,
               });
               deleteMutation.mutate(productId);
@@ -70,4 +66,4 @@ function DeleteTransactionDialog({ open, setOpen, productId }: Props) {
   );
 }
 
-export default DeleteTransactionDialog;
+export default DeleteProductDialog;
