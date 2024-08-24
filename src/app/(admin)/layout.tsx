@@ -47,8 +47,8 @@ export default function RootLayout({
                     <div className="flex h-full flex-col gap-2">
                         <div className="flex h-[60px] items-center border-b px-6">
                             <Link className="flex items-center gap-2 font-semibold" href="/">
-                                <LogoIcon className="h-6 w-6 text-primary" />
-                                {sidebarOpen && <span className="">Ecosystem BMW</span>}
+                                <LogoIcon className="h-20 w-20 text-primary" />
+                                {sidebarOpen && <span className="sr-only">Ecosystem BMW</span>}
                             </Link>
                         </div>
                         <nav className="grid items-start px-4 text-sm font-medium">

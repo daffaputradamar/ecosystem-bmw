@@ -39,7 +39,7 @@ export default function Navbar() {
             <div className="w-full max-w-7xl mx-auto px-4 py-2">
                 <div className="flex justify-between h-14 items-center">
                     <Link className="flex items-center" href="/">
-                        <LogoIcon className="h-6 w-6 text-primary" />
+                        <LogoIcon className="h-20 w-20 text-primary" /> 
                         <span className="sr-only">Ecosystem BMW</span>
                     </Link>
                     <nav className="hidden md:flex gap-5">

@@ -135,8 +135,8 @@ export default function AuthForm() {
         <>
             <Card className="w-[350px]">
                 <CardHeader>
-                    <CardTitle className='flex items-center gap-3 text-xl'>
-                        <LogoIcon className="h-8 w-8 text-primary" /> Ecosystem BMW
+                    <CardTitle className='flex items-center gap-3 text-xl justify-center'>
+                        <LogoIcon className="h-24 w-24 text-primary" /> <span className='sr-only'>Ecosystem BMW</span>
                     </CardTitle>
                     <CardDescription>Login or create a new account</CardDescription>
                 </CardHeader>
