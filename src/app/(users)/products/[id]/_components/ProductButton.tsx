@@ -4,16 +4,21 @@ import { Button } from "@/components/ui/button"
 import { ProductSchemaType } from "@/schema/product";
 import { Share2, ShoppingCart } from "lucide-react"
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function ProductButton({ product }: { product: ProductSchemaType }) {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
+
 
   async function onShareHandler() {
     if(status === "unauthenticated") {
-      router.push("/auth/signin");
+      const params = new URLSearchParams();
+      params.set("callbackUrl", pathname);
+
+      router.push(`/auth/signin?${params.toString()}`);
       return;
     }
 

@@ -86,12 +86,10 @@ export default function AuthForm() {
         if (searchParams.get('signup') === 'true') {
             setTabsValue('register')
         }
-    }, [])
+    }, [searchParams])
 
 
     const handleLogin = async (values: LoginSchemaType) => {
-        console.log("tes");
-
         setIsPendingLogin(true)
 
         try {
@@ -99,15 +97,20 @@ export default function AuthForm() {
                 ...values,
                 redirect: false,
             })
-
-            console.log(result);
+            
+            setIsPendingLogin(false)
 
             if (!result || result?.error) {
                 setErrorLogin('Invalid credentials')
+                return;
             }
-            else {
-                router.refresh()
+
+            if(searchParams.get('callbackUrl')) {
+                router.push(searchParams.get('callbackUrl')!)
+                return;
             }
+
+            router.refresh()
             //     console.log(session);
 
             //     if(session?.user.role === "admin") {
@@ -116,7 +119,6 @@ export default function AuthForm() {
             //         router.push("/")
             //     }
             // }
-            setIsPendingLogin(false)
         } catch (error) {
             setErrorLogin('An error occurred during login')
         }
