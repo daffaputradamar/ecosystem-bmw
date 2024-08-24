@@ -22,7 +22,7 @@ export default function Product({ product }: { product: ProductSchemaType }) {
             />
             <div className="p-4 flex flex-col gap-3 bg-card justify-between">
                 <p className="text-xs md:text-lg">{product.name}</p>
-                <p className="text-xs sm:text-sm md:text-xl font-semibold">{IDR.format(parseFloat(product.price))}</p>  
+                <p className="text-sm sm:text-sm md:text-xl font-semibold">{IDR.format(parseFloat(product.price))}</p>  
             </div>
         </div>
 

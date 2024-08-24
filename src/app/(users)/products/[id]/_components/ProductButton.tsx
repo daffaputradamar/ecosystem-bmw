@@ -37,7 +37,6 @@ export default function ProductButton({ product }: { product: ProductSchemaType 
       navigator.share({
         title: product.name,
         text: product.description,
-        url: window.location.href, // The current page URL
         files: [
           file
         ],
