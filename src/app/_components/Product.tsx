@@ -18,11 +18,11 @@ export default function Product({ product }: { product: ProductSchemaType }) {
                 alt={product.description}
                 width={500}
                 height={500}
-                className="object-cover w-full h-64 aspect-square"
+                className="object-cover w-full aspect-square"
             />
-            <div className="p-4 flex flex-col gap-3 bg-card">
-                <p className="text-lg">{product.name}</p>
-                <p className="text-lg font-semibold md:text-xl">{IDR.format(parseFloat(product.price))}</p>
+            <div className="p-4 flex flex-col gap-3 bg-card justify-between">
+                <p className="text-xs md:text-lg">{product.name}</p>
+                <p className="text-xs sm:text-sm md:text-xl font-semibold">{IDR.format(parseFloat(product.price))}</p>  
             </div>
         </div>
 

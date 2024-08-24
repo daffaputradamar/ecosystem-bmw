@@ -24,7 +24,7 @@ export default function ProductList({products}: {products: ProductSchemaType[]})
                     toast.error("Upload failed", { id: "upload-button" });
                 }}
             /> */}
-            <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4 md:px-6 py-12">
+            <section className="grid grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4 px-4 md:px-6 py-12">
                 {
                     products?.map((product: ProductSchemaType) => (
                         <Product key={product.id} product={product} />

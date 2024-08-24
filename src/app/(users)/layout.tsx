@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <>
       <Navbar />
-      <main className="flex-1 container">
+      <main className="flex-1 md:container">
         {children}
       </main>
       <Footer />
