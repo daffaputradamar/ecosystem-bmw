@@ -69,13 +69,13 @@ export default function Navbar() {
                                 </>
                             ) : (
                                 <>
-                                    <Link href="/auth/signin">
+                                    {/* <Link href="/auth/signin">
                                         <Button size="sm" variant="outline">
                                             Sign in
                                         </Button>
-                                    </Link>
-                                    <Link href="/auth/signin?signup=true" >
-                                        <Button size="sm">Sign up</Button>
+                                    </Link> */}
+                                    <Link href="/auth/signin" >
+                                        <Button size="sm">Login / Register</Button>
                                     </Link>
                                 </>
                             )
