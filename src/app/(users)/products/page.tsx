@@ -8,20 +8,9 @@ export default async function Home() {
   const products = await getProducts();
   
   return (
-    <>
-      {/* <UploadButton className="mt-28 mb-12" /> */}
-      {/* <UploadButton
-        endpoint="imageUploader"
-        onClientUploadComplete={(res) => {
-          // Do something with the response
-          console.log("Files: ", res);
-          alert("Upload Completed");
-        }}
-        onUploadError={(error: Error) => {
-          toast.error(error.message);
-        }}
-      /> */}
-      <ProductList products={products} />
-    </>
+    <div className='py-12 px-4 md:px-6 md:container'>
+    <h1 className="text-3xl font-bold mb-8">Product Catalogue</h1>
+    <ProductList products={products} />
+    </div>
   )
 }

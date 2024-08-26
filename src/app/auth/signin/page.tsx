@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/app/api/auth/[...nextauth]/config";
 
 export const dynamic = "force-dynamic"
+export const revalidate = 0
 
 export default async function Page() {
 

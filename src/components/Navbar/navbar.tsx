@@ -17,10 +17,14 @@ export default function Navbar() {
         path: string;
         name: string;
     }[] = [
-            // {
-            //     path: "/products",
-            //     name: "Products"
-            // }
+            {
+                path: "/products",
+                name: "Home"
+            },
+            {
+                path: "/about",
+                name: "About"
+            }
         ]
 
     let pathName = usePathname()
@@ -37,21 +41,23 @@ export default function Navbar() {
         <nav className="inset-x-0 top-0 z-50">
             <div className="w-full max-w-7xl mx-auto px-4 py-2">
                 <div className="flex justify-between h-14 items-center">
-                    <Link className="flex items-center" href="/">
-                        <LogoIcon className="h-20 w-20 text-primary" /> 
-                        <span className="sr-only">Ecosystem BMW</span>
-                    </Link>
-                    <nav className="hidden md:flex gap-5">
-                        {menus.map((menu) => {
-                            const isActive = pathName === menu.path;
+                    <div className="flex items-center gap-12">
+                        <Link className="flex items-center" href="/">
+                            <LogoIcon className="h-20 w-20 text-primary" />
+                            <span className="sr-only">Ecosystem BMW</span>
+                        </Link>
+                        <nav className="hidden md:flex">
+                            {menus.map((menu) => {
+                                const isActive = pathName === menu.path;
 
-                            return (
-                                <Link key={menu.path} className={`font-medium flex items-center text-sm transition-colors hover:underline px-4 ${isActive ? "bg-primary py-2 rounded-lg text-primary-foreground" : ""}`} href={menu.path}>
-                                    {menu.name}
-                                </Link>
-                            )
-                        })}
-                    </nav>
+                                return (
+                                    <Link key={menu.path} className={`font-medium flex items-center transition-colors hover:underline px-4 ${isActive ? "text-primary" : ""}`} href={menu.path}>
+                                        {menu.name}
+                                    </Link>
+                                )
+                            })}
+                        </nav>
+                    </div>
 
                     <div className="flex items-center gap-4">
                         {status === 'loading' ? <Skeleton className="w-36 h-12 rounded-xl bg-gray-200 dark:bg-gray-700" /> :
@@ -96,7 +102,7 @@ export default function Navbar() {
                                                 const isActive = pathName === menu.path
 
                                                 return (
-                                                    <Link key={menu.path} className={`flex w-full items-center py-2 px-3 text-lg font-semibold ${isActive ? "bg-primary rounded-md text-primary-foreground" : ""}`} href={menu.path}>
+                                                    <Link key={menu.path} className={`flex w-full items-center py-2 px-3 text-lg font-semibold ${isActive ? "text-primary" : ""}`} href={menu.path}>
                                                         {menu.name}
                                                     </Link>)
                                             })}

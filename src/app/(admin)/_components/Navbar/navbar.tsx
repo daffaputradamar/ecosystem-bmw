@@ -1,13 +1,13 @@
 'use client'
 import { ModeToggle } from "@/components/ModeToggle/mode-toggle";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Menu, User } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 
-export default function Navbar({setSidebarOpen}: {setSidebarOpen: Dispatch<SetStateAction<boolean>>}) {
+export default function Navbar({ setSidebarOpen }: { setSidebarOpen: Dispatch<SetStateAction<boolean>> }) {
     const router = useRouter()
 
     const toggleSidebar = () => {
@@ -25,7 +25,10 @@ export default function Navbar({setSidebarOpen}: {setSidebarOpen: Dispatch<SetSt
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle Sidebar</span>
             </Button>
-            <div className='hidden lg:flex'></div>
+            <Button className="hidden lg:flex" size="icon" variant="ghost" onClick={toggleSidebar}>
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle Sidebar</span>
+            </Button>
             <div className='flex items-center gap-4'>
                 <ModeToggle />
                 <DropdownMenu>

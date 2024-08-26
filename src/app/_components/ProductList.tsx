@@ -1,36 +1,37 @@
 'use client'
 
-import { Skeleton } from "@/components/ui/skeleton";
 import Product from "./Product";
-import { useQuery } from "@tanstack/react-query";
-import { UploadButton } from "@/utils/uploadthing";
-import { toast } from "sonner";
 import { ProductSchemaType } from "@/schema/product";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
-export default function ProductList({products}: {products: ProductSchemaType[]}) {
+export default function ProductList({ products }: { products: ProductSchemaType[] }) {
+    const [searchTerm, setSearchTerm] = useState('')
+
+    const filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
 
     return (
-        <>
-            {/* <UploadButton
-                endpoint="imageUploader"
-                onUploadBegin={() => {
-                    toast.loading("Uploading...", { id: "upload-button" });
-                }}
-                onClientUploadComplete={(res) => {
-                    // Do something with the response
-                    toast.success("Upload Completed", { id: "upload-button" });
-                }}
-                onUploadError={(error: Error) => {
-                    toast.error("Upload failed", { id: "upload-button" });
-                }}
-            /> */}
-            <section className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3 xl:grid-cols-4 px-4 md:px-6 py-12">
+        <div>
+            <div className="relative mb-6">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                />
+            </div>
+            <section className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
                 {
-                    products?.map((product: ProductSchemaType) => (
+                    filteredProducts?.map((product: ProductSchemaType) => (
                         <Product key={product.id} product={product} />
                     ))
                 }
             </section>
-        </>
+        </div>
     )
 }

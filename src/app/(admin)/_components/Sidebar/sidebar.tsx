@@ -75,6 +75,7 @@ export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus:
                                     return (
                                         <>
                                             <button
+                                                key={index}
                                                 className="flex w-full items-center justify-between rounded-lg px-3 py-2 transition-all hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-400"
                                                 onClick={() => toggleMenu('products')}
                                             >
@@ -91,7 +92,7 @@ export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus:
                                                     return (
                                                         <div
                                                             key={index}
-                                                            className={`rounded-lg px-3 py-2 transition-all ${isActive
+                                                            className={`rounded-lg px-3 py-2 transition-all cursor-pointer ${isActive
                                                                 ? 'text-primary' // Active styles
                                                                 : 'hover:text-gray-900 dark:hover:text-gray-50'}`}
                                                             onClick={() => handleNavigation(child.path)}
@@ -111,7 +112,7 @@ export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus:
                                     return (
                                         <div
                                             key={index}
-                                            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive
+                                            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all cursor-pointer ${isActive
                                                 ? 'text-primary' // Active styles
                                                 : 'hover:text-gray-900 dark:hover:text-gray-50'}`}
                                             onClick={() => handleNavigation(menu.path)}
