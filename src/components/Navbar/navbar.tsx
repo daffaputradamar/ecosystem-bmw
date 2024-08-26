@@ -3,11 +3,10 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import LogoIcon from "../icons/logo"
 import MenuIcon from "../icons/menu"
 import { signOut, useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
 import { Skeleton } from "../ui/skeleton"
 
 export default function Navbar() {

@@ -97,7 +97,7 @@ export default function Page() {
     }
   });
   return (
-    <div className="container mx-auto py-10">
+    <div>
       <h1 className="text-3xl font-bold mb-8">Create Product</h1> 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -108,7 +108,7 @@ export default function Page() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Name" {...field} />
+                  <Input placeholder="Name" {...field} className="min-w-36" />
                 </FormControl>
               </FormItem>
             )}
