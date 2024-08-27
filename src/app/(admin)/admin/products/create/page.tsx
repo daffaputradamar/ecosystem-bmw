@@ -13,8 +13,10 @@ import { Button } from "@/components/ui/button";
 import { Loader2, PlusCircle } from "lucide-react";
 import { useUploadThing } from "@/utils/uploadthing";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter()
   const queryClient = useQueryClient();
   const [isUploading, setIsUploading] = useState(false);
 
@@ -36,6 +38,8 @@ export default function Page() {
       await queryClient.invalidateQueries({
         queryKey: ["products"],
       });
+
+      router.push("/admin/products")
 
     },
     onError: (e) => {

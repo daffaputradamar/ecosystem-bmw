@@ -26,6 +26,7 @@ export async function getProductById(id: number) {
 export async function getUsers() {
 
     const users = await db.query.users.findMany({
+        where: (model, { ne }) => ne(model.username, "admin"),
         orderBy: (model, { desc }) => desc(model.id),
     });
 

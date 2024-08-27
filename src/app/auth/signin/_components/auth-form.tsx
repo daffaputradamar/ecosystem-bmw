@@ -45,6 +45,7 @@ export default function AuthForm() {
         defaultValues: {
             username: "",
             password: "",
+            confirmPassword: "",
             name: "",
             role: "user",
         }
@@ -57,6 +58,7 @@ export default function AuthForm() {
             formRegister.reset({
                 username: "",
                 password: "",
+                confirmPassword: "",
                 name: "",
                 role: "user",
             });
@@ -97,7 +99,7 @@ export default function AuthForm() {
                 ...values,
                 redirect: false,
             })
-            
+
             setIsPendingLogin(false)
 
             if (!result || result?.error) {
@@ -105,7 +107,7 @@ export default function AuthForm() {
                 return;
             }
 
-            if(searchParams.get('callbackUrl')) {
+            if (searchParams.get('callbackUrl')) {
                 router.push(searchParams.get('callbackUrl')!)
                 return;
             }
@@ -231,6 +233,18 @@ export default function AuthForm() {
                                                     <Input autoComplete='current-password' type="password" placeholder="******" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={formRegister.control}
+                                        name="confirmPassword"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Confirm Password</FormLabel>
+                                                <FormControl>
+                                                    <Input type="password" placeholder="******" {...field} />
+                                                </FormControl>
                                             </FormItem>
                                         )}
                                     />

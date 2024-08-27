@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { ChevronDown, InfoIcon, Package, Users } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, Fragment, SetStateAction, useState } from "react"
 
 export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus: any[], sidebarOpen: boolean, setSidebarOpen: Dispatch<SetStateAction<boolean>> }) {
     const router = useRouter()
@@ -75,9 +75,8 @@ export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus:
                                 if (menu.children && menu.children.length > 0) {
 
                                     return (
-                                        <>
+                                        <Fragment key={index}>
                                             <button
-                                                key={index}
                                                 className="flex w-full items-center justify-between rounded-lg px-3 py-2 transition-all hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-300"
                                                 onClick={() => toggleMenu(menu.name)}
                                             >
@@ -109,7 +108,7 @@ export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus:
                                             </div>
                                             }
                                                 
-                                        </>
+                                        </ Fragment>
                                     )
                                 } else {
                                     return (

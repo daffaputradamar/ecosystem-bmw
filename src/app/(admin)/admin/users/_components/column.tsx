@@ -2,7 +2,7 @@
 
 import { ProductSchemaType } from "@/schema/product"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, Link, MoreHorizontal, TrashIcon } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal, PencilIcon, TrashIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -16,6 +16,7 @@ import { useState } from "react"
 import DeleteUserDialog from "./DeleteUserDialog"
 import Image from "next/image"
 import { UserSchemaType } from "@/schema/users"
+import Link from "next/link"
 
 export const columns: ColumnDef<UserSchemaType>[] = [
   {
@@ -79,30 +80,6 @@ export const columns: ColumnDef<UserSchemaType>[] = [
   {
     id: "actions",
     cell: ({ row }) => <RowActions user={row.original} />
-    // {
-    //   const product = row.original
-
-    //   return (
-    //     <DropdownMenu>
-    //       <DropdownMenuTrigger asChild>
-    //         <Button variant="ghost" className="h-8 w-8 p-0">
-    //           <span className="sr-only">Open menu</span>
-    //           <MoreHorizontal className="h-4 w-4" />
-    //         </Button>
-    //       </DropdownMenuTrigger>
-    //       <DropdownMenuContent align="end">
-    //         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-    //         <DropdownMenuItem
-    //           onClick={() => navigator.clipboard.writeText(product.image_url)}
-    //         >
-    //           Copy image URL
-    //         </DropdownMenuItem>
-    //         <DropdownMenuSeparator />
-    //         <DropdownMenuItem>Delete</DropdownMenuItem>
-    //       </DropdownMenuContent>
-    //     </DropdownMenu>
-    //   )
-    // },
   },
 ]
 
@@ -110,9 +87,6 @@ export const columns: ColumnDef<UserSchemaType>[] = [
 function RowActions({ user }: { user: UserSchemaType }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-  if(user.role === "admin") {
-    return null;
-  }
   return (
     <>
       <DeleteUserDialog
@@ -130,15 +104,26 @@ function RowActions({ user }: { user: UserSchemaType }) {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            className="flex items-center gap-2"
-            onSelect={() => {
-              setShowDeleteDialog((prev) => !prev);
-            }}
-          >
-            <TrashIcon className="h-4 w-4 text-muted-foreground" />
-            Delete
-          </DropdownMenuItem>
+          <Link href={`/admin/users/${user.id}/edit`}>
+            <DropdownMenuItem
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+              Edit
+            </DropdownMenuItem>
+          </Link>
+          {
+            user.role !== "admin" && 
+            <DropdownMenuItem
+              className="flex items-center gap-2 text-destructive cursor-pointer"
+              onSelect={() => {
+                setShowDeleteDialog((prev) => !prev);
+              }}
+            >
+              <TrashIcon className="h-4 w-4" />
+              Delete
+            </DropdownMenuItem>
+          }
         </DropdownMenuContent>
       </DropdownMenu>
     </>

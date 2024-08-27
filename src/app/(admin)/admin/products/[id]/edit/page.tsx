@@ -70,7 +70,7 @@ export default function Page() {
                 file: "",
             });
 
-            toast.success(`Product ${data.name} created successfully 🎉`, {
+            toast.success(`Product ${data.name} updated successfully 🎉`, {
                 id: "update-product",
             });
 

@@ -16,8 +16,6 @@ export async function UpdateProduct(form: InsertProductSchemaType) {
         throw new Error("Bad Request");
     }
 
-console.log(parsedBody.data);
-
     const product = await db.query.products.findFirst({
         where: (model, { eq }) => eq(model.id, parsedBody.data.id!),
     })

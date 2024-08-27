@@ -50,6 +50,7 @@ function DeleteUserDialog({ open, setOpen, userId }: Props) {
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
+                    className="bg-destructive hover:bg-destructive/70 text-white"
                         onClick={() => {
                             toast.loading("Deleting user...", {
                                 id: userId,
