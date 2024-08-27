@@ -2,7 +2,7 @@
 
 import Sidebar from './_components/Sidebar/sidebar';
 import Navbar from './_components/Navbar/navbar';
-import { InfoIcon, Package, Users } from 'lucide-react';
+import { CirclePlus, InfoIcon, Library, Package, Users } from 'lucide-react';
 import { useState } from 'react';
 
 
@@ -25,10 +25,12 @@ export default function RootLayout({
             children: [
                 {
                     name: 'All Products',
+                    icon: Library,
                     path: '/admin/products'
                 },
                 {
                     name: 'Add New Product',
+                    icon: CirclePlus,
                     path: '/admin/products/create'
                 }
             ]
@@ -36,7 +38,18 @@ export default function RootLayout({
         {
             name: 'Users',
             icon: Users,
-            path: '/admin/users'
+            children: [
+                {
+                    name: 'All Users',
+                    icon: Library,
+                    path: '/admin/users'
+                },
+                {
+                    name: 'Add New User',
+                    icon: CirclePlus,
+                    path: '/admin/users/create'
+                }
+            ]
         }
     ]
 

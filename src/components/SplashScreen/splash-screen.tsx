@@ -9,7 +9,7 @@ const SplashScreen: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 0);
 
     return () => clearTimeout(timer);
   }, []);

@@ -4,7 +4,6 @@ import { InsertProductSchema, InsertProductSchemaType } from "@/schema/product";
 import { db } from "@/server/db";
 import { products } from "@/server/db/schema";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation"
 
 export async function CreateProduct(form: InsertProductSchemaType) {
   const parsedBody = InsertProductSchema.safeParse(form);

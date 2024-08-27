@@ -11,10 +11,12 @@ import { Dispatch, SetStateAction, useState } from "react"
 export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus: any[], sidebarOpen: boolean, setSidebarOpen: Dispatch<SetStateAction<boolean>> }) {
     const router = useRouter()
     
-    const [openMenus, setOpenMenus] = useState({
-        products: true,
-        users: false,
-    })
+    const [openMenus, setOpenMenus] = useState(menus.reduce((acc, menu) => {
+        if (!menu.children) return acc;
+
+        acc[menu.name] = false;
+        return acc;
+    }, {} as Record<string, boolean>));
     const pathname = usePathname();
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -24,8 +26,8 @@ export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus:
     })).filter(menu => menu.name.toLowerCase().includes(searchQuery.toLowerCase()) || menu.children.length > 0);
 
 
-    const toggleMenu = (menu: 'products' | 'users') => {
-        setOpenMenus(prevState => ({
+    const toggleMenu = (menu: string) => {
+        setOpenMenus((prevState: {[key: string]: boolean}) => ({
             ...prevState,
             [menu]: !prevState[menu]
         }))
@@ -59,7 +61,7 @@ export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus:
                         <div className="px-4 py-2">
                             <Input
                                 placeholder="Search..."
-                                className="w-full rounded-lg text-sm border focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400"
+                                className="w-full rounded-lg text-sm border focus:outline-none focus:ring-2 focus:ring-primary dark:bg-background dark:text-gray-200 dark:placeholder-gray-400"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -76,31 +78,32 @@ export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus:
                                         <>
                                             <button
                                                 key={index}
-                                                className="flex w-full items-center justify-between rounded-lg px-3 py-2 transition-all hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-400"
-                                                onClick={() => toggleMenu('products')}
+                                                className="flex w-full items-center justify-between rounded-lg px-3 py-2 transition-all hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-300"
+                                                onClick={() => toggleMenu(menu.name)}
                                             >
                                                 <div className="flex items-center gap-3">
-                                                    <Package className="h-4 w-4" />
-                                                    {sidebarOpen && <span>Products</span>}
+                                                    <menu.icon className="h-4 w-4" />
+                                                    {sidebarOpen && <span>{menu.name}</span>} 
                                                 </div>
-                                                {sidebarOpen && <ChevronDown className={`h-4 w-4 transition-transform ${openMenus.products ? 'rotate-180' : ''}`} />}
+                                                {sidebarOpen && <ChevronDown className={`h-4 w-4 transition-transform ${openMenus[menu.name] ? 'rotate-180' : ''}`} />}
                                             </button>
-                                            {sidebarOpen && openMenus.products &&
+                                            {sidebarOpen && openMenus[menu.name] &&
                                             <div className="ml-4 mt-2 grid gap-1">
                                                 { menu.children.map((child: any, index: number) => {
                                                     isActive = pathname === child.path;
                                                     return (
-                                                        <div
+                                                        <Link
                                                             key={index}
-                                                            className={`rounded-lg px-3 py-2 transition-all cursor-pointer ${isActive
+                                                            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive
                                                                 ? 'text-primary' // Active styles
-                                                                : 'hover:text-gray-900 dark:hover:text-gray-50'}`}
-                                                            onClick={() => handleNavigation(child.path)}
+                                                                : 'hover:text-primary dark:hover:text-primary'}`}
+                                                            href={child.path}
                                                         >
                                                             {/* <div className="flex md:hidden absolute inset-0 -z-10" onClick={() => setSidebarOpen(false)}>
                                                             </div> */}
+                                                            <child.icon className="w-4 h-4" />
                                                             {child.name}
-                                                        </div>
+                                                        </Link>
                                                     )
                                                 })}
                                             </div>
@@ -110,18 +113,16 @@ export default function Sidebar({ menus, sidebarOpen, setSidebarOpen }: { menus:
                                     )
                                 } else {
                                     return (
-                                        <div
+                                        <Link
                                             key={index}
-                                            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all cursor-pointer ${isActive
+                                            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive
                                                 ? 'text-primary' // Active styles
-                                                : 'hover:text-gray-900 dark:hover:text-gray-50'}`}
-                                            onClick={() => handleNavigation(menu.path)}
+                                                : 'hover:text-primary dark:hover:text-primary'}`}
+                                            href={menu.path}
                                         >
-                                            {/* <div className="flex md:hidden absolute inset-0 z-10" onClick={() => setSidebarOpen(false)}>
-                                            </div> */}
                                             {menu.icon && <menu.icon className="w-4 h-4" />}
                                             {sidebarOpen && <span>{menu.name}</span>}
-                                        </div>
+                                        </Link>
                                     )
                                 }
                             })

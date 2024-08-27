@@ -2,7 +2,7 @@
 
 import { ProductSchemaType } from "@/schema/product"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, Link, MoreHorizontal, TrashIcon } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal, PencilIcon, TrashIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -15,6 +15,7 @@ import {
 import { useState } from "react"
 import DeleteProductDialog from "./DeleteProductDialog"
 import Image from "next/image"
+import Link from "next/link"
 
 export const columns: ColumnDef<ProductSchemaType>[] = [
   {
@@ -106,7 +107,7 @@ export const columns: ColumnDef<ProductSchemaType>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <RowActions transaction={row.original} />
+    cell: ({ row }) => <RowActions product={row.original} />
     // {
     //   const product = row.original
 
@@ -135,7 +136,7 @@ export const columns: ColumnDef<ProductSchemaType>[] = [
 ]
 
 
-function RowActions({ transaction: product }: { transaction: ProductSchemaType }) {
+function RowActions({ product }: { product: ProductSchemaType }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   return (
@@ -155,13 +156,21 @@ function RowActions({ transaction: product }: { transaction: ProductSchemaType }
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <Link href={`/admin/products/${product.id}/edit`}>
+            <DropdownMenuItem
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <PencilIcon className="h-4 w-4" />
+              Edit
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 text-destructive cursor-pointer"
             onSelect={() => {
               setShowDeleteDialog((prev) => !prev);
             }}
           >
-            <TrashIcon className="h-4 w-4 text-muted-foreground" />
+            <TrashIcon className="h-4 w-4" />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

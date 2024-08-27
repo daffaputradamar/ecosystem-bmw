@@ -162,7 +162,7 @@ export default function Page() {
 
           {/* <UploadButton /> */}
 
-          <Button onClick={form.handleSubmit(onSubmit)} disabled={isPending}>
+          <Button onClick={form.handleSubmit(onSubmit)} disabled={isPending || isUploading}>
             {!(isPending || isUploading) && <>
               <PlusCircle className="w-5 h-5 mr-2" />
               Create

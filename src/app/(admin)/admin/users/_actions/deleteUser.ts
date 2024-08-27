@@ -5,12 +5,12 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function DeleteUser(id: number) {
-    const user = await db.query.products.findFirst({
+    const user = await db.query.users.findFirst({
         where: (model, { eq }) => eq(model.id, id),
     })
 
     if (!user) {
-        throw new Error(`Product not found`);
+        throw new Error(`User not found`);
     }
 
     await db.delete(users).where(eq(users.id, id));  
