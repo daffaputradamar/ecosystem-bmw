@@ -48,7 +48,7 @@ export default async function ProductDetails({ params }: { params: { id: number 
         <h1 className="font-bold text-xl lg:text-2xl">{product.name}</h1>
         <div className="text-4xl font-bold">{IDR.format(parseFloat(product.price))}</div>
         <div className="grid gap-4 text-sm leading-loose">
-          <p>{product.description}</p>
+          <div dangerouslySetInnerHTML={{ __html: product.description }} />
         </div>
         <form className="grid gap-4">
           <ProductButton product={product} />

@@ -15,7 +15,7 @@ export const authConfig = {
         const user = await db.query.users.findFirst({
           where: (model, { eq }) => eq(model.username, credentials!.username),
         });
-
+        
         if (user && (await verifyPassword(credentials!.password, user.password))) {
           return user;
         }

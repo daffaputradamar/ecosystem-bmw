@@ -17,6 +17,7 @@ import SkeletonWrapper from "@/components/SkeletonWrapper/skeleton-wrapper";
 import Image from "next/image";
 import Link from "next/link";
 import { UpdateProduct } from "../../_actions/updateProduct";
+import RictTextEditor from "@/components/RichText/rich-text";
 
 export default function Page() {
     const router = useRouter();
@@ -153,7 +154,8 @@ export default function Page() {
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Textarea placeholder="Description" {...field} />
+                                        {/* <Textarea placeholder="Description" {...field} /> */}
+                                        <RictTextEditor placeholder="Description" {...field} />
                                     </FormControl>
                                 </FormItem>
                             )}
