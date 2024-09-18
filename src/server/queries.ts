@@ -13,7 +13,7 @@ export async function getProducts() {
 export async function getProductById(id: number) {
     const product = await db.query.products.findFirst({
         where: (model, { eq }) => eq(model.id, id),
-        orderBy: (model, { desc }) => desc(model.id),
+        orderBy: (model, { desc }) => desc(model.id)
     });
 
     if (!product) {
@@ -22,6 +22,14 @@ export async function getProductById(id: number) {
 
     return product;
 }
+
+export async function getProductImagesByProductId(productId: number) {
+    const images = await db.query.productImages.findMany({
+      where: (productImage, { eq }) => eq(productImage.product_id, productId),
+    });
+  
+    return images;
+  }
 
 export async function getUsers() {
 

@@ -6,7 +6,7 @@ const f = createUploadthing();
 const auth = (req: Request) => ({ id: "fakeId" });
  
 export const ourFileRouter = {
-  imageUploader: f({ image: { maxFileSize: "2MB" } })
+  imageUploader: f({ image: { maxFileSize: "2MB", maxFileCount: 10 } })
     .middleware(async ({ req }) => {
       const user = await auth(req);
  

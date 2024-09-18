@@ -15,3 +15,8 @@ export const hashPassword = async (password: string) => {
 export const verifyPassword = async (password: string, hash: string) => {
   return await bcrypt.compare(password, hash);
 };
+
+
+export const stripHtmlTags = (str: string) => { 
+  return str.replace(/<\/?[^>]+(>|$)/g, "");
+}

@@ -4,6 +4,7 @@ import { z } from "zod";
 
 export const InsertProductSchema = createInsertSchema(products).extend({
     file: z.any().optional(),
+    images: z.any().optional(),
 });
 export type InsertProductSchemaType = z.infer<typeof InsertProductSchema>;
 

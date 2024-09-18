@@ -1,6 +1,6 @@
-import { table } from "console";
 import { sql } from "drizzle-orm";
 import {
+  integer,
   numeric,
   pgEnum,
   pgTableCreator,
@@ -31,6 +31,20 @@ export const products = createTable(
     }
   );
 
+export const productImages = createTable(
+    "product_images",
+    {
+      id: serial("id").primaryKey(),
+      product_id: integer("product_id").references(() => products.id),
+      image_url: varchar("url", { length: 1024 }).notNull(),
+  
+      createdAt: timestamp("created_at")
+        .default(sql`CURRENT_TIMESTAMP`)
+        .notNull(),
+      updatedAt: timestamp("updatedAt"),
+    }
+  );
+
 export const userRoleEnum = pgEnum('role', ['user', 'admin']);  
 
 export const users = createTable(
@@ -51,5 +65,4 @@ export const users = createTable(
       usernameUniqueIndex: uniqueIndex('usernameUniqueIndex').on(table.username)
     })
   );
-  
-export type UserType = typeof users.$inferSelect; 
+

@@ -2,7 +2,7 @@
 
 import { InsertProductSchema, InsertProductSchemaType } from "@/schema/product";
 import { db } from "@/server/db";
-import { products } from "@/server/db/schema";
+import { productImages, products } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { UTApi } from "uploadthing/server";
@@ -40,6 +40,11 @@ export async function UpdateProduct(form: InsertProductSchemaType) {
     product.updatedAt= new Date();
 
     await db.update(products).set(product).where(eq(products.id, parsedBody.data.id));
+
+    await db.insert(productImages).values(form.images.map((image: {url: string}) => ({
+        product_id: product.id,
+        image_url: image.url
+      })));
 
     revalidatePath("/admin/products");
     revalidatePath("/products");

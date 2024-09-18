@@ -16,6 +16,7 @@ import { useState } from "react"
 import DeleteProductDialog from "./DeleteProductDialog"
 import Image from "next/image"
 import Link from "next/link"
+import { stripHtmlTags } from "@/lib/utils"
 
 export const columns: ColumnDef<ProductSchemaType>[] = [
   {
@@ -35,6 +36,15 @@ export const columns: ColumnDef<ProductSchemaType>[] = [
   {
     accessorKey: "description",
     header: "Description",
+    cell: ({ row }) => {
+      const description = stripHtmlTags(row.original.description)
+
+      return (
+        <div className="flex items-center gap-2">
+          {description.length > 50 ? description.slice(0, 50) + "..." : description}
+        </div>
+      )
+    }
   },
   {
     accessorKey: "price",

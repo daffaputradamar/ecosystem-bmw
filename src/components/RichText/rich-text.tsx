@@ -1,8 +1,6 @@
 'use client';
-import React, { useState, useRef, useMemo, useEffect } from 'react';
-import JoditEditor, { IJoditEditorProps, Jodit } from 'jodit-react';
-
-type PartialJoditOptions = Partial<IJoditEditorProps['config']>;
+import { useEffect, useRef } from 'react';
+import Editor from './editor';
 
 interface RictTextEditorProps {
 	value: string;
@@ -11,26 +9,12 @@ interface RictTextEditorProps {
   }
 
 const RictTextEditor = ({ value, onChange, placeholder }: RictTextEditorProps) => {
-	const editor = useRef<any>(null);
-
-	const config = useMemo<PartialJoditOptions>(() => ({
-		placeholder: placeholder || '',
-		readonly: false
-	}), [placeholder])
-
-	useEffect(() => {
-		if (editor.current) {
-		  editor.current.value = value;
-		}
-	  }, [value]);	
-
+	
 	return (
-		<JoditEditor
-			ref={editor}
-			value={value}
-			config={config}
-			onBlur={newContent => onChange(newContent)} // preferred to use only this option to update the content for performance reasons
-			onChange={newContent => {}}
+		<Editor
+			content={value}
+			placeholder={ placeholder ?? 'Description...'}
+			onChange={onChange}
 		/>
 	);
 };

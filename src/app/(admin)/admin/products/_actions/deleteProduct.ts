@@ -16,8 +16,18 @@ export async function DeleteProduct(id: number) {
         throw new Error(`Product not found`);
     }
 
+    const productImages = await db.query.productImages.findMany({
+        where: (model, { eq }) => eq(model.product_id, id),
+    });
+
     const imageUrl = product.image_url.substring(product.image_url.lastIndexOf("/") + 1); 
-    await deleteUTFiles([imageUrl]);
+
+    let productImagesUrl: string[] = [];
+    productImages.forEach(image => {
+        productImagesUrl.push(image.image_url.substring(image.image_url.lastIndexOf("/") + 1));
+    });
+
+    await deleteUTFiles([imageUrl, ...productImagesUrl]);
 
     await db.delete(products).where(eq(products.id, id)); 
 

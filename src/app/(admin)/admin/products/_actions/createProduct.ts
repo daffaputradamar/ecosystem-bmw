@@ -2,7 +2,7 @@
 
 import { InsertProductSchema, InsertProductSchemaType } from "@/schema/product";
 import { db } from "@/server/db";
-import { products } from "@/server/db/schema";
+import { productImages, products } from "@/server/db/schema";
 import { revalidatePath } from "next/cache";
 
 export async function CreateProduct(form: InsertProductSchemaType) {
@@ -13,12 +13,17 @@ export async function CreateProduct(form: InsertProductSchemaType) {
   }
 
   const { name, description, price, image_url } = parsedBody.data;
-  await db.insert(products).values({
+  const result = await db.insert(products).values({
     name,
     description,
     price,
     image_url
-  });
+  }).returning();
+
+  await db.insert(productImages).values(form.images.map((image: {url: string}) => ({
+    product_id: result[0].id,
+    image_url: image.url
+  })));
 
   revalidatePath("/admin/products");
   revalidatePath("/products");
